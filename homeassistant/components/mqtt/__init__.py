@@ -597,6 +597,14 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
             )
         )
 
+    if not bool(hass.config_entries.async_entries(DOMAIN)):
+        hass.async_create_task(
+            hass.config_entries.flow.async_init(
+                DOMAIN,
+                context={"source": config_entries.SOURCE_DISCOVERY},
+                data={},
+            )
+        )
     return True
 
 
